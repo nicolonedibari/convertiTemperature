@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converti temperature</title>
+</head>
+<body>
+    <h1>Convertitore di temperature</h1>
+    <form action="temperature.php" method="post">
+        <label>Valore:</label>
+        <input type="number" name="valore">
+        <br>
+        <label>Da:</label>
+        <select name="da">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+
+        <label>A:</label>
+        <select name="a">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+
+        <br>
+        <input type="submit" value="Converti">
+    </form>
+</body>
+</html>
