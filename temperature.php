@@ -1,4 +1,10 @@
 <?php
+    $log_file = 'data/logVisite.txt';
+
+    $timestamp = date('Y/m/d - H:i:s');
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+
+
     $valore = "";
     $scala_da = "";
     $scala_a = "";
@@ -10,7 +16,16 @@
         $scala_da = isset($_POST["da"]) ? trim($_POST["da"]) : "";
         $scala_a = isset($_POST["a"]) ? trim($_POST["a"]) : "";
 
-        if($scala_da === $scala_a){
+        if ($valore === "" || !is_numeric($valore)) {
+            $risultato = "Errore: Devi inserire un valore numerico valido.";
+            $log_entry = "[ERROR] - [$timestamp] - $ip_address - valore non valido\n";
+            $valore_finale = "";
+            $log_handle = fopen($log_file, 'a');
+            if ($log_handle) {
+                fwrite($log_handle, $log_entry);
+                fclose($log_handle);
+            }
+        } elseif($scala_da === $scala_a){
             $risultato = "La temperatura resta invariata: $valore °$scala_a";
         } else {
             switch ($scala_da) {
@@ -38,8 +53,20 @@
             if($risultato === ""){
                 $risultato = "Risultato: <strong>" . round($valore_finale, 2) . " °$scala_a</strong>";  
             }
+            
+            $log_entry = "$timestamp - $ip_address - From $scala_da to $scala_a - $valore °$scala_da - $valore_finale °$scala_a\n";
+
+            $log_handle = fopen($log_file, 'a');
+
+            if ($log_handle) {
+                fwrite($log_handle, $log_entry);
+                fclose($log_handle);
+            } else {
+                echo "$log_error";
+            }
 
         }
+        
     }
 ?>
 
